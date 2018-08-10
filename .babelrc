@@ -1,0 +1,18 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "modules": false,
+        "useBuiltins": true,
+        "targets": {
+          "node": [">1%", "last 2 versions", "not ie < 10"]
+        }
+      }
+    ],
+    "stage-0"
+  ],
+  "plugins": [
+    "transform-runtime"
+  ]
+}

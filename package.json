@@ -1,0 +1,26 @@
+{
+  "name": "doutuime",
+  "version": "0.1.0",
+  "description": "Source code for https://doutui.me/",
+  "repository": "https://github.com/maicong/doutuime",
+  "author": "MaiCong",
+  "license": "MIT",
+  "scripts": {
+    "dev": "del -f dist && cpy 'music/*.mp3' dist/music && parcel src/index.html --no-autoinstall --no-cache",
+    "build": "del -f dist && cpy 'music/*.mp3' dist/music && parcel build src/index.html --no-source-maps --no-cache",
+    "zip": "cross-conf-env zip -r npm_package_name-npm_package_version.zip dist"
+  },
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "cpy-cli": "^2.0.0",
+    "cross-conf-env": "^1.1.2",
+    "cssnano": "^4.0.5",
+    "del-cli": "^1.1.0",
+    "parcel-bundler": "^1.9.7",
+    "postcss-preset-env": "^5.3.0"
+  }
+}

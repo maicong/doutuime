@@ -1,0 +1,16 @@
+{
+  "ie8": false,
+  "ecma": 5,
+  "mangle": true,
+  "sourceMap": false,
+  "compress": {
+    "warnings": false,
+    "drop_console": true,
+    "drop_debugger": true
+  },
+  "output": {
+    "comments": false,
+    "beautify": false,
+    "ascii_only": true
+  }
+}
