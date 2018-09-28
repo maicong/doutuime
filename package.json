@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "del -f dist && cpy 'music/*.mp3' dist/music && parcel src/index.html --no-autoinstall --no-cache",
-    "build": "del -f dist && cpy 'music/*.mp3' dist/music && parcel build src/index.html --no-source-maps --no-cache",
+    "build": "del -f dist && cpy 'music/*.mp3' dist/music && parcel build src/index.html --no-source-maps --no-cache --public-url .",
     "zip": "cross-conf-env zip -r npm_package_name-npm_package_version.zip dist"
   },
   "dependencies": {
