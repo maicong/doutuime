@@ -68,6 +68,9 @@ import { musicCDN, musicList } from '../config.json'
   let isLoad = false
   let isPause = false
   let playing = false
+  let coreImg
+  let coreImgN = 1
+  let coreImgLen = 5
 
   window.addEventListener('load', initialize, false)
   window.addEventListener('resize', resizeHandler, false)
@@ -87,6 +90,12 @@ import { musicCDN, musicList } from '../config.json'
     }
 
     actx = new AudioContext()
+
+    const img = new window.Image()
+    img.src = require('./doutui-sprite.png')
+    img.onload = () => {
+      coreImg = img
+    }
 
     resizeHandler()
     initializeAudio()
@@ -112,20 +121,20 @@ import { musicCDN, musicList } from '../config.json'
     const xmlHTTP = new window.XMLHttpRequest()
     const mp3URL = `${
       process.env.NODE_ENV === 'production' && musicCDN ? musicCDN : 'music/'
-    }${musicList[musicIndex]}`
+    }${musicList[musicIndex]}.mp3`
 
     xmlHTTP.open('GET', mp3URL, true)
     xmlHTTP.responseType = 'arraybuffer'
 
     xmlHTTP.onprogress = function (e) {
       if (e.lengthComputable) {
-        $('control').classList.remove('active')
+        // $('control').classList.remove('active')
         $('loading').classList.remove('hide')
         msgElement.textContent = `- ${Math.round((e.loaded / e.total) * 100)} % -`
       }
     }
     xmlHTTP.onload = function (e) {
-      $('control').classList.add('active')
+      // $('control').classList.add('active')
       $('loading').classList.add('hide')
 
       isLoad = false
@@ -164,13 +173,13 @@ import { musicCDN, musicList } from '../config.json'
   }
 
   function createAudioControls () {
-    const control = $('control')
-    control.addEventListener('click', function (e) {
-      e.preventDefault()
+    // const control = $('control')
+    document.body.addEventListener('click', function (e) {
+      // e.preventDefault()
       toggleAudio()
     })
 
-    control.classList.add('active')
+    // control.classList.add('active')
 
     isPause = false
     playAudio()
@@ -197,7 +206,7 @@ import { musicCDN, musicList } from '../config.json'
     asource.connect(gainNode)
     pausedAt ? asource.start(0, pausedAt / 1000) : asource.start()
     if (musicList[musicIndex]) {
-      document.title = `抖腿么: ${musicList[musicIndex].replace('.mp3', '')}`
+      document.title = `${musicList[musicIndex]} - 抖腿么`
     }
     animate()
   }
@@ -283,6 +292,12 @@ import { musicCDN, musicList } from '../config.json'
     let value
     let xc
     let yc
+    let width
+    let scale
+    let imgW
+    let imgH
+    let imgX
+    let imgY
 
     if (avg > AVG_BREAK_POINT) {
       rotation += -bubble_avg_tick
@@ -296,9 +311,9 @@ import { musicCDN, musicList } from '../config.json'
       ctx.fillStyle = bubble_avg_color
     }
 
-    let width = (value || 100) - 100
-    $('control').style.transform = `translateZ(0) scale(${value / 100 * 1.5})`
-    $('control').style.filter = `drop-shadow(0 0 ${(width < 0 ? 0 : width) + 5}px #fff)`
+    // let width = (value || 100) - 100
+    // $('control').style.transform = `translateZ(0) scale(${value / 100 * 1.5})`
+    // $('control').style.filter = `drop-shadow(0 0 ${(width < 0 ? 0 : width) + 5}px #fff)`
 
     ctx.beginPath()
     ctx.lineWidth = 1
@@ -326,6 +341,10 @@ import { musicCDN, musicList } from '../config.json'
     p.dy = p.y + value * cos(PI_HALF * p.angle)
     xc = (p.dx + avg_points[0].dx) / 2
     yc = (p.dy + avg_points[0].dy) / 2
+    width = (xc - p.dx) * (p.dy - yc + 1)
+    scale = width / 10
+
+    ctx.lineWidth = Math.ceil(width / 10)
 
     ctx.quadraticCurveTo(p.dx, p.dy, xc, yc)
     ctx.quadraticCurveTo(xc, yc, avg_points[0].dx, avg_points[0].dy)
@@ -335,7 +354,51 @@ import { musicCDN, musicList } from '../config.json'
     ctx.restore()
     ctx.closePath()
 
-    i = len = p = value = xc = yc = null
+    if (coreImg) {
+      imgW = coreImg.width / coreImg.height * 100
+      imgH = 100
+      imgX = (ctx.canvas.width / scale - imgW) / 2
+      imgY = (ctx.canvas.height / scale - imgH) / 2
+
+      ctx.beginPath()
+      ctx.save()
+      ctx.imageSmoothingEnabled = true
+      ctx.imageSmoothingQuality = 'high'
+      ctx.filter = `drop-shadow(0 0 ${width}px ${scale >= 1.5 ? bubble_avg_line_color : stars_color_2})`
+      ctx.scale(scale, scale)
+      const draw = () => {
+        if (imgX) {
+          const iW = imgW / coreImgLen
+          let n = Math.ceil((coreImgN / 5) % coreImgLen) - 1
+          if (coreImgN >= coreImgLen * 100) {
+            coreImgN = 1
+          }
+          if (n === -1) {
+            n = coreImgLen - 1
+          }
+          ctx.drawImage(
+            coreImg,
+            iW * n,
+            0,
+            iW,
+            imgH,
+            imgX + iW * (coreImgLen / 2 - 0.5),
+            imgY,
+            iW,
+            imgH
+          )
+          coreImgN++
+        }
+        window.requestAnimationFrame(draw)
+      }
+      draw()
+      ctx.stroke()
+      ctx.fill()
+      ctx.restore()
+      ctx.closePath()
+    }
+
+    i = len = p = value = xc = yc = width = scale = imgW = imgH = imgX = imgY = null
   }
 
   function drawWaveform () {

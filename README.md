@@ -6,7 +6,7 @@
 
 (感谢这款源码 [https://codepen.io/noeldelgado/pen/EaNjBy](https://codepen.io/noeldelgado/pen/EaNjBy))
 
-💃 [在线演示](https://doutui.me/)
+💃 [在线演示](https://maicong.github.io/doutuime/)
 📦 [源码下载 - Gitee](https://gitee.com/maicong/doutuime/releases)
 📦 [源码下载 - Github](https://github.com/maicong/doutuime/releases)
 

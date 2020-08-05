@@ -33,7 +33,6 @@ canvas {
   height: 41px;
   margin: -21px 0 0 -150px;
   color: #fff;
-  -webkit-transition: all 400ms;
   transition: all 400ms;
 }
 
@@ -53,7 +52,7 @@ canvas {
   display: none;
 }
 
-#control {
+/* #control {
   display: none;
   align-items: center;
   justify-content: center;
@@ -87,7 +86,7 @@ canvas {
 
 #control .hide {
   display: none;
-}
+} */
 
 #no-audio {
   display: none;

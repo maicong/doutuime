@@ -1,26 +1,45 @@
 {
   "name": "doutuime",
-  "version": "0.1.1",
-  "description": "Source code for https://doutui.me/",
+  "version": "0.1.2",
+  "description": "抖起来~~~",
   "repository": "https://github.com/maicong/doutuime",
   "author": "MaiCong",
   "license": "MIT",
   "scripts": {
-    "dev": "del -f dist && cpy 'music/*.mp3' dist/music && parcel src/index.html --no-autoinstall --no-cache",
-    "build": "del -f dist && cpy 'music/*.mp3' dist/music && parcel build src/index.html --no-source-maps --no-cache --public-url .",
+    "dev": "del dist && cpy 'music/*.mp3' dist/music && parcel src/index.html --no-autoinstall --no-cache",
+    "build": "del docs && cpy 'music/*.mp3' docs/music && parcel build src/index.html --no-source-maps --no-cache --public-url . -d docs",
     "zip": "cross-conf-env zip -r npm_package_name-npm_package_version.zip dist"
   },
+  "browserslist": [
+    "> 1%",
+    "not dead",
+    "Chrome >= 28",
+    "Firefox >= 28",
+    "Edge >= 12",
+    "Explorer >= 10",
+    "Safari >= 5.1",
+    "iOS >= 7",
+    "Android >= 4",
+    "ExplorerMobile >= 11",
+    "ChromeAndroid >= 54",
+    "FirefoxAndroid >= 50",
+    "UCAndroid >= 11",
+    "OperaMobile >= 12.1",
+    "BlackBerry >= 10",
+    "Samsung >= 4"
+  ],
   "dependencies": {
     "babel-core": "^6.26.3",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1",
-    "cpy-cli": "^2.0.0",
+    "cpy-cli": "^3.1.1",
     "cross-conf-env": "^1.1.2",
-    "cssnano": "^4.0.5",
-    "del-cli": "^1.1.0",
-    "parcel-bundler": "^1.9.7",
-    "postcss-preset-env": "^5.3.0"
+    "cssnano": "^4.1.10",
+    "del-cli": "^3.0.1",
+    "parcel-bundler": "^1.12.4",
+    "postcss-preset-env": "^6.7.0",
+    "postcss-modules": "^3.2.0"
   }
 }
